@@ -33,11 +33,23 @@ export class HomePage {
       .subscribe(response => {
         this.auth.successfulLogin(response.headers.get('Authorization'));
         this.navCtrl.setRoot('CategoriasPage');
-      })
+      }, error => {});
   }
 
   ionViewDidLeave() {
     this.menuControler.swipeEnable(true);
+  }
+
+  ionViewDidEnter() {
+    this.auth.refreshToken()
+    .subscribe(response => {
+      this.auth.successfulLogin(response.headers.get('Authorization'));
+      this.navCtrl.setRoot('CategoriasPage');
+    }, error => {});
+  }
+
+  signup(){
+    this.navCtrl.push('SignupPage');
   }
 
 }
